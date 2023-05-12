@@ -1,0 +1,118 @@
+﻿@page "/bindProp"
+@inject HttpClient HttpClient
+@using BlazorApp_Server.Model;
+
+<PageTitle>Index</PageTitle>
+
+
+<h1>Roos</h1>
+<div class="border-2  bg-info">
+    <table class="table">
+        <thead class="table-danger">
+            <tr>
+                <th>Row</th>
+                <th>Price</th>
+                <th>Active</th>
+                <th>Props</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Rooms)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Price</td>
+                    <td>@item.IsActive</td>
+                    <td>@item.RoomProps.Count.ToString()</td>
+                    @foreach (var prop in item.RoomProps)
+                    {
+                        <td><input type="text" @bind="prop.Name" @bind:event="oninput" /></td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="container border-1 bg-success text-light">
+        @foreach (var item in Rooms)
+        {
+            
+            @foreach (var prop in item.RoomProps)
+            {
+                <span>@prop.Name </span>
+
+                <span>&nbsp; </span>
+                
+            }
+            <br />
+        }
+
+    </div>
+</div>
+<div class="border">
+    Id: <span>@room.Id</span><br />
+    Price: <span>@room.Price</span><br />
+    Is Active: <span>@room.IsActive</span><br />
+    Property: <select @bind="selected">
+        <option selected="selected" disabled>--Select Property--</option>
+        @foreach (var item in room.RoomProps)
+        {
+            <option value="@item.Name">@item.Name</option>
+        }
+    </select>
+    <br />
+    The selected room property is: <span>@selected</span>
+</div>
+
+
+@code {
+    public string selected { get; set; } = "";
+    public List<BlazorRoom> Rooms { get; set; } = new List<BlazorRoom>();
+
+    BlazorRoom room = new BlazorRoom
+        {
+            Id = 1,
+            IsActive = true,
+            Price = 12.99,
+            RoomProps = new List<BlazorRoomProp>
+            {
+                new BlazorRoomProp{Id=1,Name="prop1",Value="value1"},
+                new BlazorRoomProp{Id=2,Name="prop2",Value="value2"},
+                new BlazorRoomProp{Id=3,Name="prop3",Value="value3"},
+                new BlazorRoomProp{Id=4,Name="prop4",Value="value4"}
+            }
+        };
+
+    protected override void OnInitialized()
+    {
+        Rooms.AddRange(
+            new List<BlazorRoom>
+                {
+                new BlazorRoom
+                    {
+                        Id = 1,
+                        IsActive = true,
+                        Price = 12.99,
+                        RoomProps = new List<BlazorRoomProp>
+                        {
+                            new BlazorRoomProp{Id=1,Name="Room1 prop1",Value="Room1 value1"},
+                            new BlazorRoomProp{Id=2,Name="Room1 prop2",Value="Room1 value2"},
+                            new BlazorRoomProp{Id=3,Name="Room1 prop3",Value="Room1 value3"},
+                            new BlazorRoomProp{Id=4,Name="Room1 prop4",Value="Room1 value4"}
+                        }
+                    },
+                                    new BlazorRoom
+                    {
+                        Id = 2,
+                        IsActive = true,
+                        Price = 12.99,
+                        RoomProps = new List<BlazorRoomProp>
+                        {
+                            new BlazorRoomProp{Id=1,Name="Room2 prop1",Value="Room2 value1"},
+                            new BlazorRoomProp{Id=2,Name="Room2 prop2",Value="Room2 value2"},
+                            new BlazorRoomProp{Id=3,Name="Room2 prop3",Value="Room2 value3"}
+                        }
+                    }
+                }
+        );
+    }
+}

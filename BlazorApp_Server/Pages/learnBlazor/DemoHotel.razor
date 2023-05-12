@@ -1,0 +1,121 @@
+﻿@page "/demohotel"
+
+
+
+<div class="container row border-2 bg-info p-3 ">
+    <h3 class="text-light">List of Room using Components</h3>
+    <span>Rooms Selected @SelectedRooms</span>
+    @foreach (var item in Rooms!)
+    {
+        <div class="col-4 border-2 bg-light m-2 p-4">
+            <IndividualRoom Room="@item" RoomSelectionEvent="OnRoomSelectionChange"></IndividualRoom>
+            
+        </div>
+    }
+
+    
+</div>
+<div class="container row border-2 bg-info p-3 ">
+    <span>Aminites Selected Count @SelectAminity</span>
+    <h3 class="text-light">Hotel Amenitie's[assignment]</h3>
+    @foreach (var item in Amenities!)
+    {
+        <div class="col-5 border-2 bg-light m-2 p-4">
+            <HotelAmenity AmenityProp="@item" AmenitieSelectionEvent="OnAmenitieSelection"> </HotelAmenity>
+
+        </div>
+    }
+    <div>
+    @foreach (var item in AminitySelectedList)
+    {
+        <span class="m-1 p-2  border-2 bg-black text-light">@item</span>
+    }
+    </div>
+
+</div>
+
+
+
+
+
+
+
+@code{
+    public int SelectedRooms { get; set; } = 0;
+    public int SelectAminity { get; set; } = 0;
+    public List<BlazorRoom>? Rooms { get; set; }
+    public List<Amenity>? Amenities { get; set; }
+    public List<string> AminitySelectedList { get; set; } = new List<string>();
+
+
+    protected override void OnInitialized()
+    {
+        Rooms = new List<BlazorRoom>();
+        Rooms.AddRange(
+            new List<BlazorRoom>
+                    {
+                new BlazorRoom
+                    {
+                        Id = 1,
+                        RoomName="Room1",
+                        IsActive = true,
+                        Price = 12.99,
+                        RoomProps = new List<BlazorRoomProp>
+                        {
+                            new BlazorRoomProp{Id=1,Name="Room1 prop1",Value="Room1 value1"},
+                            new BlazorRoomProp{Id=2,Name="Room1 prop2",Value="Room1 value2"},
+                            new BlazorRoomProp{Id=3,Name="Room1 prop3",Value="Room1 value3"},
+                            new BlazorRoomProp{Id=4,Name="Room1 prop4",Value="Room1 value4"}
+                        }
+                    },
+                                    new BlazorRoom
+                    {
+                        Id = 2,
+                        RoomName="Room2",
+                        IsActive = true,
+                        Price = 12.99,
+                        RoomProps = new List<BlazorRoomProp>
+                        {
+                            new BlazorRoomProp{Id=1,Name="Room2 prop1",Value="Room2 value1"},
+                            new BlazorRoomProp{Id=2,Name="Room2 prop2",Value="Room2 value2"},
+                            new BlazorRoomProp{Id=3,Name="Room2 prop3",Value="Room2 value3"}
+                        }
+                    }
+                    }
+        );
+        Amenities = new List<Amenity>()
+        {
+            new Amenity{Id=1,Name="Wi-Fi",Description="Wi-Fi is a family of wireless network protocols based on the IEEE"},
+            new Amenity{Id=2,Name="Swimming pool",Description="A swimming pool, swimming bath, wading pool, paddling pool, or simply pool, is a structure designed"},
+            new Amenity{Id=3,Name="Room service",Description="Room service in hotels allows guests to order food and drink in their rooms instead of going to restaurants. Hotel staff"},
+            new Amenity{Id=4,Name="Fitness center",Description="A health club is a place that houses exercise equipment for the purpose of physical exercise. In recent years, the number of fitness and"}
+        };
+
+    }
+    private void OnRoomSelectionChange(bool change)
+    {
+        if (change)
+        {
+            SelectedRooms++;
+        }
+        else
+        {
+            SelectedRooms--;
+        }
+    }
+
+    private void OnAmenitieSelection(Emv emv)
+    {
+        if (emv.IsSelected)
+        {
+            AminitySelectedList.Add(emv.Name);
+            SelectAminity++;
+        }
+        else
+        {
+            AminitySelectedList.Remove(emv.Name);
+            SelectAminity--;
+        }
+    }
+
+}

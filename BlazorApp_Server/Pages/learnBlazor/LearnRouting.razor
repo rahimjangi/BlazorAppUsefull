@@ -1,0 +1,26 @@
+﻿@page "/LearnRouting"
+@page "/LearnRouting/{parameter1:int}"
+
+
+<h3>LearnRouting</h3>
+@if (parameter1!=0)
+{
+    <span>@parameter1</span>
+}
+<div class="row">
+    <div class="col-6">
+        <input type="text" @bind-value="@firstName"/>
+        <input type="text" @bind-value="@lastName" />
+        <a href="LearnAdvanceRouting/@firstName/@lastName">Lets go to advance routing page!</a>
+    </div>
+</div>
+
+@code {
+
+    [Parameter]
+    public int parameter1 { get; set; }
+
+    private string firstName = "";
+    private string lastName = "";
+    
+}

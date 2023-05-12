@@ -1,0 +1,15 @@
+﻿@page "/LearnAdvanceRouting"
+@page "/LearnAdvanceRouting/{parameter1}/{parameter2}"
+<h3>LearnAdvanceRouting</h3>
+<p>
+    Parameter1: @parameter1<br />
+    Parameter2: @parameter2
+</p>
+
+@code {
+    [Parameter]
+    public string parameter1 { get; set; }
+    [Parameter]
+    public string parameter2 { get; set; }
+
+}

@@ -1,0 +1,23 @@
+﻿
+Select <input type="checkbox" @onchange="AmenitieSelection" />
+<h4 class="border bg-dark text-light text-center p-2">Name: <strong>@AmenityProp.Name</strong></h4>
+<p>Price: <span>@AmenityProp.Description</span></p>
+
+@code {
+    [Parameter]
+    public Amenity AmenityProp { get; set; } = null!;
+    [Parameter]
+    public EventCallback<Emv> AmenitieSelectionEvent { get; set; }
+
+    private async Task AmenitieSelection(ChangeEventArgs e)
+    {
+        Emv emv = new Emv
+        {
+            IsSelected=(bool)e.Value,
+            Name=AmenityProp.Name
+        };
+        await AmenitieSelectionEvent.InvokeAsync(emv);
+    }
+
+
+}

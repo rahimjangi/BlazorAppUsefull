@@ -1,0 +1,33 @@
+﻿@page "/ParentComponent"
+
+<h3>ParentComponent</h3>
+<ChildComponent Title="@myTitle" OnBtnClickEvent="SendMessage" MessageFromParrent="@messageText">
+   <div>
+       <h3>Render Content</h3>
+        <p>When we write mark-up inside a component, Blazor will assume it should be assigned to a Parameter on the component that is descended from the RenderFragment class and is named ChildContent. If we wish to use a different name, or multiple render fragments, then we must explicitly specify the parameter's name in our mark-up.</p>
+        <h3 class="text-light bg-dark p-3 m-3">@messageText</h3>
+   </div>
+</ChildComponent>
+<hr />
+<CascadingValue Value="@MessageForGrandChild">
+    <AnotherChildComponent maxlength="4" placeholder="What to do next?" ></AnotherChildComponent>
+</CascadingValue>
+<br />
+<br />
+<br />
+<br />
+<br />
+
+@code {
+    private string MessageForGrandChild = "What should I do know? The time and GOD played with me, I think they testing me but I know I am nothing!";
+    private string myTitle = "Hoshi";
+    private string messageText = "";
+
+    
+
+    private void SendMessage(MouseEventArgs e)
+    {
+        messageText = "This Message comes from parent to child";
+    }
+
+}

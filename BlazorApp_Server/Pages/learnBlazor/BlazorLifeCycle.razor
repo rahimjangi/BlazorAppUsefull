@@ -1,0 +1,74 @@
+﻿@page "/lifecycle"
+<PageTitle>Life Cycle</PageTitle>
+
+<h3>Blazor Life Cycle</h3>
+
+
+<h1>Counter</h1>
+
+<p role="status">Current count: @currentCount</p>
+
+<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+<div class="container border-2 bg-info m-2 p-2 ">
+    <div class="row">
+        <div class="col-6 "></div>
+        <ol class="text-light col-6 ">
+            @foreach (var item in EventList)
+            {
+                <li class="bg-dark p-2 m-2">@item</li>
+            }
+        </ol>
+    </div>
+</div>
+
+@code {
+    private int currentCount = 0;
+    public List<string> EventList { get; set; } = new List<string>();
+
+    private void IncrementCount()
+    {
+        currentCount++;
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        EventList.Add($"protected override void OnAfterRender currentCount: {currentCount}");
+    }
+
+    protected override Task OnAfterRenderAsync(bool firstRender)
+    {
+        EventList.Add($"protected override Task OnAfterRenderAsync  currentCount: {currentCount}");
+        return base.OnAfterRenderAsync(firstRender);
+    }
+    protected override void OnInitialized()
+    {
+        EventList.Add("protected override void OnInitialized");
+    }
+
+    protected override Task OnInitializedAsync()
+    {
+        EventList.Add("protected override Task OnInitializedAsync");
+        return base.OnInitializedAsync();
+    }
+
+    protected override void OnParametersSet()
+    {
+        EventList.Add("protected override void OnParametersSet");
+    }
+    protected override Task OnParametersSetAsync()
+    {
+        EventList.Add("protected override Task OnParametersSetAsync");
+        return base.OnParametersSetAsync();
+    }
+    protected override bool ShouldRender()
+    {
+        EventList.Add($"protected override bool ShouldRender  currentCount: {currentCount}");
+        return base.ShouldRender();
+    }
+
+
+
+
+
+}
+
